@@ -423,20 +423,25 @@ function shuffleChar(str, iterations) {
     return str;
   }
 
+  let transformedStr = str;
   let strByOddIndexes = '';
   let styByEvenIndexes = '';
 
   for (let i = 0; i < iterations; i += 1) {
     for (let j = 0; j < str.length; j += 1) {
       if (j % 2) {
-        strByOddIndexes += str[j];
+        strByOddIndexes += transformedStr[j];
       } else {
-        styByEvenIndexes += str[j];
+        styByEvenIndexes += transformedStr[j];
       }
     }
+
+    transformedStr = styByEvenIndexes + strByOddIndexes;
+    strByOddIndexes = '';
+    styByEvenIndexes = '';
   }
 
-  return strByOddIndexes + styByEvenIndexes;
+  return transformedStr;
 }
 
 /**
