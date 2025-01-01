@@ -397,8 +397,29 @@ function rotateMatrix(matrix) {
  *  [2, 9, 5, 9]    => [2, 5, 9, 9]
  *  [-2, 9, 5, -3]  => [-3, -2, 5, 9]
  */
-function sortByAsc(/* arr */) {
-  throw new Error('Not implemented');
+function sortByAsc(arr) {
+  const sameArr = arr;
+  let isSorted;
+  let lengthForChecking = arr.length;
+
+  while (isSorted !== true) {
+    isSorted = true;
+    lengthForChecking -= 1;
+
+    for (let i = 0; i < lengthForChecking; i += 1) {
+      const a = arr[i];
+      const b = arr[i + 1];
+
+      if (a > b) {
+        sameArr[i] = b;
+        sameArr[i + 1] = a;
+
+        isSorted = false;
+      }
+    }
+  }
+
+  return arr;
 }
 
 /**
@@ -423,25 +444,18 @@ function shuffleChar(str, iterations) {
     return str;
   }
 
-  let transformedStr = str;
   let strByOddIndexes = '';
   let styByEvenIndexes = '';
 
-  for (let i = 0; i < iterations; i += 1) {
-    for (let j = 0; j < str.length; j += 1) {
-      if (j % 2) {
-        strByOddIndexes += transformedStr[j];
-      } else {
-        styByEvenIndexes += transformedStr[j];
-      }
+  for (let i = 0; i < str.length; i += 1) {
+    if (i % 2) {
+      strByOddIndexes += str[i];
+    } else {
+      styByEvenIndexes += str[i];
     }
-
-    transformedStr = styByEvenIndexes + strByOddIndexes;
-    strByOddIndexes = '';
-    styByEvenIndexes = '';
   }
 
-  return transformedStr;
+  return shuffleChar(styByEvenIndexes + strByOddIndexes, iterations - 1);
 }
 
 /**
