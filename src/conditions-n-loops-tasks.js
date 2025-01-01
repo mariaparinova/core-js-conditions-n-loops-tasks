@@ -427,11 +427,11 @@ function shuffleChar(str, iterations) {
   let styByEvenIndexes = '';
 
   for (let i = 0; i < iterations; i += 1) {
-    for (let i = 0; i < str.length; i += 1) {
-      if (i % 2) {
-        strByOddIndexes += str[i];
+    for (let j = 0; j < str.length; j += 1) {
+      if (j % 2) {
+        strByOddIndexes += str[j];
       } else {
-        styByEvenIndexes += str[i];
+        styByEvenIndexes += str[j];
       }
     }
   }
