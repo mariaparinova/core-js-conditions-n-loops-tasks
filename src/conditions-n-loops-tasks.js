@@ -426,15 +426,17 @@ function shuffleChar(str, iterations) {
   let strByOddIndexes = '';
   let styByEvenIndexes = '';
 
-  for (let i = 0; i < str.length; i += 1) {
-    if (i % 2) {
-      strByOddIndexes += str[i];
-    } else {
-      styByEvenIndexes += str[i];
+  for (let i = 0; i < iterations; i += 1) {
+    for (let i = 0; i < str.length; i += 1) {
+      if (i % 2) {
+        strByOddIndexes += str[i];
+      } else {
+        styByEvenIndexes += str[i];
+      }
     }
   }
 
-  return shuffleChar(styByEvenIndexes + strByOddIndexes, iterations - 1);
+  return strByOddIndexes + styByEvenIndexes;
 }
 
 /**
