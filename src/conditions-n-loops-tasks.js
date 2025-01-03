@@ -168,30 +168,53 @@ function convertToRomanNumerals(num) {
  *  '1950.2'  => 'one nine five zero point two'
  */
 function convertNumberToString(numberStr) {
-  const charsStr = [
-    'zero',
-    'one',
-    'two',
-    'three',
-    'four',
-    'five',
-    'six',
-    'seven',
-    'eight',
-    'nine',
-  ];
-
   let numberByWord = '';
 
   for (let i = 0; i < numberStr.length; i += 1) {
     const char = numberStr[i];
 
-    if (char === '-') {
-      numberByWord += 'minus';
-    } else if (char === '.' || char === ',') {
-      numberByWord += 'point';
-    } else {
-      numberByWord += charsStr[char];
+    switch (char) {
+      case '0':
+        numberByWord += 'zero';
+        break;
+      case '1':
+        numberByWord += 'one';
+        break;
+      case '2':
+        numberByWord += 'two';
+        break;
+      case '3':
+        numberByWord += 'three';
+        break;
+      case '4':
+        numberByWord += 'four';
+        break;
+      case '5':
+        numberByWord += 'five';
+        break;
+      case '6':
+        numberByWord += 'six';
+        break;
+      case '7':
+        numberByWord += 'seven';
+        break;
+      case '8':
+        numberByWord += 'eight';
+        break;
+      case '9':
+        numberByWord += 'nine';
+        break;
+      case '-':
+        numberByWord += 'minus';
+        break;
+      case '.':
+        numberByWord += 'point';
+        break;
+      case ',':
+        numberByWord += 'point';
+        break;
+      default:
+        numberByWord += '';
     }
 
     if (i !== numberStr.length - 1) {
@@ -244,15 +267,13 @@ function isPalindrome(str) {
  *  'qwerty', 'p'     => -1
  */
 function getIndexOf(str, letter) {
-  let index = -1;
-
   for (let i = 0; i < str.length; i += 1) {
     if (str[i] === letter) {
-      index = i;
+      return i;
     }
   }
 
-  return index;
+  return -1;
 }
 
 /**
@@ -399,14 +420,14 @@ function rotateMatrix(matrix) {
  */
 function sortByAsc(arr) {
   const sameArr = arr;
-  let isSorted;
-  let lengthForChecking = arr.length;
+  let isSorted = false;
+  let start = 0;
+  let end = arr.length;
 
   while (isSorted !== true) {
     isSorted = true;
-    lengthForChecking -= 1;
 
-    for (let i = 0; i < lengthForChecking; i += 1) {
+    for (let i = start; i < end - 1; i += 1) {
       const a = arr[i];
       const b = arr[i + 1];
 
@@ -417,6 +438,22 @@ function sortByAsc(arr) {
         isSorted = false;
       }
     }
+
+    end -= 1;
+
+    for (let j = end; j >= start; j -= 1) {
+      const a = arr[j];
+      const b = arr[j + 1];
+
+      if (a > b) {
+        sameArr[j] = b;
+        sameArr[j + 1] = a;
+
+        isSorted = false;
+      }
+    }
+
+    start += 1;
   }
 
   return arr;
@@ -440,22 +477,42 @@ function sortByAsc(arr) {
  *  'qwerty', 3 => 'qetwry' => 'qtrewy' => 'qrwtey'
  */
 function shuffleChar(str, iterations) {
-  if (iterations === 0) {
+  if (str.length < 3 || iterations < 1) {
     return str;
   }
 
-  let strByOddIndexes = '';
-  let styByEvenIndexes = '';
+  let shuffledStr = str;
+  let period = 0;
 
-  for (let i = 0; i < str.length; i += 1) {
-    if (i % 2) {
-      strByOddIndexes += str[i];
-    } else {
-      styByEvenIndexes += str[i];
+  function shuffleStep(inputStr) {
+    let strByOddIndexes = '';
+    let strByEvenIndexes = '';
+
+    for (let j = 0; j < inputStr.length; j += 1) {
+      if (j % 2 === 0) {
+        strByEvenIndexes += inputStr[j];
+      } else {
+        strByOddIndexes += inputStr[j];
+      }
+    }
+
+    return strByEvenIndexes + strByOddIndexes;
+  }
+
+  for (let i = 0; i < iterations; i += 1) {
+    shuffledStr = shuffleStep(shuffledStr);
+
+    if (shuffledStr === str) {
+      period = iterations % (i + 1);
+      break;
     }
   }
 
-  return shuffleChar(styByEvenIndexes + strByOddIndexes, iterations - 1);
+  for (let i = 0; i < period; i += 1) {
+    shuffledStr = shuffleStep(shuffledStr);
+  }
+
+  return shuffledStr;
 }
 
 /**
